@@ -1,0 +1,14 @@
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\bin\Release\net7.0\SoareAlexGameServer.Infrastructure.deps.json
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\bin\Release\net7.0\SoareAlexGameServer.Infrastructure.runtimeconfig.json
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\bin\Release\net7.0\SoareAlexGameServer.Infrastructure.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\bin\Release\net7.0\SoareAlexGameServer.Infrastructure.pdb
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\SoareAlexGameServer.Infrastructure.csproj.AssemblyReference.cache
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\SoareAlexGameServer.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\SoareAlexGameServer.Infrastructure.AssemblyInfoInputs.cache
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\SoareAlexGameServer.Infrastructure.AssemblyInfo.cs
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\SoareAlexGameServer.Infrastructure.csproj.CoreCompileInputs.cache
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\SoareAlexGameServer.Infrastructure.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\refint\SoareAlexGameServer.Infrastructure.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\SoareAlexGameServer.Infrastructure.pdb
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\SoareAlexGameServer.Infrastructure.genruntimeconfig.cache
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Release\net7.0\ref\SoareAlexGameServer.Infrastructure.dll

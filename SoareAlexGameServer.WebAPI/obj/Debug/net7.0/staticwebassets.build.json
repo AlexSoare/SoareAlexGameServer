@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "eJApxJh3BtCLXBCBUZHyqtbmKGrL3lzi2eb7yXonRho=",
+  "Source": "SoareAlexGameServer.WebAPI",
+  "BasePath": "_content/SoareAlexGameServer.WebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
