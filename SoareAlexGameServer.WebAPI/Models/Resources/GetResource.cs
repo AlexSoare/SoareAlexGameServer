@@ -21,8 +21,8 @@ namespace SoareAlexGameServer.WebAPI.Models.Resources
 
         public class CommandHandler : IRequestHandler<QueryRequest, QueryResponse>
         {
-            private IHttpContextAccessor httpContext;
-            private IPlayerProfileRepository playersRepo;
+            private readonly IHttpContextAccessor httpContext;
+            private readonly IPlayerProfileRepository playersRepo;
 
             public CommandHandler(IHttpContextAccessor httpContext, IPlayerProfileRepository playersRepo)
             {

@@ -3,6 +3,8 @@ using System.Net;
 using SoareAlexGameServer.Infrastructure.Entities.DB;
 using SoareAlexGameServer.Infrastructure.Interfaces.Repositories;
 using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
+using System.Net.WebSockets;
+using SoareAlexGameServer.Infrastructure.Services;
 
 namespace SoareAlexGameServer.WebAPI.Models.Gifts
 {
@@ -25,11 +27,13 @@ namespace SoareAlexGameServer.WebAPI.Models.Gifts
             private IHttpContextAccessor httpContext;
 
             private IPlayerProfileRepository playersRepo;
+            private IOnlinePlayersCacheService onlinePlayersCacheService;
 
-            public CommandHandler(IHttpContextAccessor httpContext, IPlayerProfileRepository playersRepo)
+            public CommandHandler(IHttpContextAccessor httpContext, IPlayerProfileRepository playersRepo, IOnlinePlayersCacheService onlinePlayersCacheService)
             {
                 this.httpContext = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
                 this.playersRepo = playersRepo ?? throw new ArgumentNullException(nameof(playersRepo));
+                this.onlinePlayersCacheService = onlinePlayersCacheService ?? throw new ArgumentNullException(nameof(onlinePlayersCacheService));
             }
 
             public async Task<QueryResponse> Handle(QueryRequest request, CancellationToken cancellationToken)
@@ -78,6 +82,18 @@ namespace SoareAlexGameServer.WebAPI.Models.Gifts
                     resourceToUpdate.Add(request.ResourceValue);
 
                 await playersRepo.UpdateItemAsync(request.FriendPlayerId, friendProfile);
+
+                var onlineFiend = onlinePlayersCacheService.GetItem(friendProfile.DeviceId);
+                if (onlineFiend != null)
+                {
+                    var wsMessage = new WebSocketMessage()
+                    {
+                        Event = WebSocketEvent.GiftEvent,
+                        Message = $"Received {request.ResourceValue} {request.ResourceType} from {thisPlayerProfile.PlayerId}"
+                    };
+
+                    await onlineFiend.SendToWebSocket(wsMessage);
+                }
 
                 response.Status = HttpStatusCode.OK;
 

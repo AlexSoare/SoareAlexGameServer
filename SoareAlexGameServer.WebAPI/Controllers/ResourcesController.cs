@@ -19,12 +19,12 @@ namespace SoareAlexWebAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("UpdateResource")]
+        [HttpPost("UpdateResources")]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Post))]
         [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateResource(UpdateResource.QueryRequest query)
+        public async Task<IActionResult> UpdateResource(UpdateResources.QueryRequest query)
         {
-            UpdateResource.QueryResponse response = await _mediator.Send(query);
+            UpdateResources.QueryResponse response = await _mediator.Send(query);
             return StatusCode((int)response.Status, response);
         }
 

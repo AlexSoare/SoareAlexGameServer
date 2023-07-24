@@ -12,8 +12,15 @@ using SoareAlexGameServer.Infrastructure.Services.Cache;
 using SoareAlexGameServer.Infrastructure.Services.Repositories;
 using SoareAlexGameServer.Infrastructure.Interfaces.Repositories;
 using SoareAlexGameServer.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using SoareAlexGameServer.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -36,7 +43,6 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<SqliteDbContext>();
 builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<IOnlinePlayersCacheService, OnlinePlayersInMemoryCacheService>();
@@ -51,10 +57,12 @@ builder.Services.AddScoped<IJwtTokenProvider, LocalJwtTokenProvider>(p =>
 
     return new LocalJwtTokenProvider(securityKey, issuer, audience);
 });
-builder.Services.AddScoped<IWebSocketService, OnlinePlayersWebSocketsHandler>();
+
+builder.Services.AddSingleton<IWebSocketService, OnlinePlayersWebSocketsHandler>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
+
 
 var app = builder.Build();
 
@@ -79,9 +87,19 @@ app.MapGet("/", async context =>
 {
     if (context.WebSockets.IsWebSocketRequest)
     {
-        var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+        var token = context.Request.Headers["Authorization"];
+
+        var tokenService = context.RequestServices.GetRequiredService<IJwtTokenProvider>();
+        List<Claim> claims;
+
+        if (string.IsNullOrEmpty(token) || !tokenService.ValidateToken(token.ToString(), out claims))
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return;
+        }
+
         var webSocketService = context.RequestServices.GetRequiredService<IWebSocketService>();
-        await webSocketService.HandleWebSocketConnection(context, webSocket);
+        await webSocketService.HandleWebSocketConnection(context, claims);
     }
 });
 

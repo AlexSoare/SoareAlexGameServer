@@ -6,7 +6,7 @@ using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
 
 namespace SoareAlexGameServer.WebAPI.Models.Resources
 {
-    public class UpdateResource
+    public class UpdateResources
     {
         public class QueryRequest : IRequest<QueryResponse>
         {

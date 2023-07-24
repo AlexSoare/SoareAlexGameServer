@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wWLIacDu/I1o+jKX6CK6L2aRRnF6EWUnZPN80g3ENj8j00bZau8S00sV7Q3ljWHHpDY4OhZEazmmcl7Kr8vxEA==",
+  "dgSpecHash": "QBrnMaCy1DJqaje9LzfplGyevHf8ZvA6arUwgaPqmKrKjnn1dpbqu35tEgK1o6PbZx0HmSA90jBZDJQV443kew==",
   "success": true,
-  "projectFilePath": "F:\\PROJECTS\\ASP.Net\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj",
+  "projectFilePath": "D:\\PROJECTS\\ASP. NET\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alecs\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\alecs\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.20\\microsoft.aspnetcore.authentication.jwtbearer.6.0.20.nupkg.sha512",

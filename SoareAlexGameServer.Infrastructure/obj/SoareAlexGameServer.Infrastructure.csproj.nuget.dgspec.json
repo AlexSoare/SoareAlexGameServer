@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\PROJECTS\\ASP.Net\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj": {}
+    "D:\\PROJECTS\\ASP. NET\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj": {}
   },
   "projects": {
-    "F:\\PROJECTS\\ASP.Net\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj": {
+    "D:\\PROJECTS\\ASP. NET\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\PROJECTS\\ASP.Net\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj",
+        "projectUniqueName": "D:\\PROJECTS\\ASP. NET\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj",
         "projectName": "SoareAlexGameServer.Infrastructure",
-        "projectPath": "F:\\PROJECTS\\ASP.Net\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj",
+        "projectPath": "D:\\PROJECTS\\ASP. NET\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\SoareAlexGameServer.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\alecs\\.nuget\\packages\\",
-        "outputPath": "F:\\PROJECTS\\ASP.Net\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\obj\\",
+        "outputPath": "D:\\PROJECTS\\ASP. NET\\SoareAlexGameServer\\SoareAlexGameServer.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alecs\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -71,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

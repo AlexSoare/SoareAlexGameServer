@@ -6,6 +6,7 @@ using System.Net;
 
 namespace SoareAlexWebAPI.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class UserAuthentificationController : ControllerBase
     {

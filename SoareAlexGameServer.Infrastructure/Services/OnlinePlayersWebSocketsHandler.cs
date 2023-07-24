@@ -1,56 +1,82 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using SoareAlexGameServer.Infrastructure.Entities;
 using SoareAlexGameServer.Infrastructure.Interfaces;
+using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
+using SoareAlexGameServer.Infrastructure.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Net.WebSockets;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SoareAlexGameServer.Infrastructure.Services
 {
+    public enum WebSocketEvent
+    {
+        GiftEvent
+    }
+
+    public class WebSocketMessage
+    {
+        public WebSocketEvent Event { get; set; }
+        public string Message { get; set; }
+    }
+
     public class OnlinePlayersWebSocketsHandler : IWebSocketService
     {
-        private WebSocket webSocket;
+        private readonly IOnlinePlayersCacheService onlinePlayersCacheService;
 
-        public async Task HandleWebSocketConnection(HttpContext context, WebSocket webSocket)
+        public OnlinePlayersWebSocketsHandler(IOnlinePlayersCacheService onlinePlayersCacheService)
         {
-            var queryParameters = context.Request.Query;
-
-            var playerId = queryParameters.FirstOrDefault(p => p.Key == "playerId");
-            var value = playerId.Value.ToString();
-
-            this.webSocket = webSocket;
-            // Your WebSocket handling logic goes here.
-            byte[] buffer = new byte[1024];
-
-            while (webSocket.State == WebSocketState.Open)
-            {
-                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-                if (result.MessageType == WebSocketMessageType.Text)
-                {
-                    // Handle incoming text message.
-                    var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    var nr = int.Parse(message);
-                    nr++;
-                    Console.WriteLine(nr);
-                    await SendTextMessage(nr.ToString());
-                    // Your custom handling logic for the received message.
-                    // For example, you can broadcast the message to all connected clients.
-                }
-                else if (result.MessageType == WebSocketMessageType.Close)
-                {
-                    // Handle WebSocket close message.
-                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
-                }
-            }
+            this.onlinePlayersCacheService = onlinePlayersCacheService ?? throw new ArgumentNullException(nameof(onlinePlayersCacheService));
         }
 
-        public async Task SendTextMessage(string message)
+        public async Task HandleWebSocketConnection(HttpContext context, List<Claim> claims)
         {
-            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
-            await webSocket.SendAsync(new ArraySegment<byte>(messageBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+            var deviceIdClaim = claims.FirstOrDefault(c => c.Type == "DeviceId");
+            var deviceId = deviceIdClaim.Value;
+
+            var onlinePlayer = onlinePlayersCacheService.GetItem(deviceId);
+
+            // TO DELETE
+            if (onlinePlayer == null)
+            {
+                var webSocketConnection = await context.WebSockets.AcceptWebSocketAsync();
+
+                onlinePlayer = new OnlinePlayer()
+                {
+                    WebSocketConnection = webSocketConnection
+                };
+
+                await onlinePlayer.ListenToWebSocket(webSocketConnection);
+
+                onlinePlayersCacheService.SetCachedItem(deviceId, onlinePlayer);
+            }
+
+            //if (onlinePlayer == null)
+            //{
+            //    context.Response.StatusCode = StatusCodes.Status404NotFound;
+            //    await context.Response.WriteAsync("Player not found!");
+            //    return;
+            //}
+
+            //if (onlinePlayer.WebSocketState != WebSocketState.Open)
+            //{
+            //    context.Response.StatusCode = StatusCodes.Status200OK;
+
+            //    var webSocketConnection = await context.WebSockets.AcceptWebSocketAsync();
+            //    await onlinePlayer.ListenToWebSocket(webSocketConnection);
+            //}
+            //else
+            //{
+            //    context.Response.StatusCode = StatusCodes.Status409Conflict;
+            //    return;
+            //}
         }
     }
 }

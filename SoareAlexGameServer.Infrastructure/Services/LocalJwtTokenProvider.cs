@@ -38,6 +38,44 @@ namespace SoareAlexGameServer.Infrastructure.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        public bool ValidateToken(string token,out List<Claim> claims)
+        {
+            claims = new List<Claim>();
 
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                // Set the validation parameters for the token
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = issuer,
+                    ValidAudience = audience,
+                    IssuerSigningKey = securityKey,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true,
+                };
+
+                // Validate the token
+                SecurityToken validatedToken;
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+                var jwtToken = tokenHandler.ReadJwtToken(token);
+
+                claims = jwtToken.Claims.ToList();
+
+                // The token is valid if no exception is thrown
+                return true;
+            }
+            catch (SecurityTokenException)
+            {
+                // Token validation failed
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Other exceptions (e.g., malformed token)
+                // Handle as needed
+                return false;
+            }
+        }
     }
 }

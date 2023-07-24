@@ -12,3 +12,17 @@ F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\D
 F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.pdb
 F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.genruntimeconfig.cache
 F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\ref\SoareAlexGameServer.Infrastructure.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\bin\Debug\net7.0\SoareAlexGameServer.Infrastructure.deps.json
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\bin\Debug\net7.0\SoareAlexGameServer.Infrastructure.runtimeconfig.json
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\bin\Debug\net7.0\SoareAlexGameServer.Infrastructure.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\bin\Debug\net7.0\SoareAlexGameServer.Infrastructure.pdb
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.csproj.AssemblyReference.cache
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.AssemblyInfoInputs.cache
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.AssemblyInfo.cs
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.csproj.CoreCompileInputs.cache
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\refint\SoareAlexGameServer.Infrastructure.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.pdb
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\SoareAlexGameServer.Infrastructure.genruntimeconfig.cache
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.Infrastructure\obj\Debug\net7.0\ref\SoareAlexGameServer.Infrastructure.dll

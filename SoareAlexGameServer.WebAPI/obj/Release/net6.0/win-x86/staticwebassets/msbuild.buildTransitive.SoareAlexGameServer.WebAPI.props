@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\SoareAlexGameServer.WebAPI.props" />
+</Project>

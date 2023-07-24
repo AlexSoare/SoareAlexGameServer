@@ -7,6 +7,7 @@ using SoareAlexGameServer.Infrastructure.Entities.DB;
 using SoareAlexGameServer.Infrastructure.Entities;
 using System.Net;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SoareAlexGameServer.WebAPI.Models.UserAuthentification
 {
@@ -59,7 +60,7 @@ namespace SoareAlexGameServer.WebAPI.Models.UserAuthentification
                 }
 
                 // Search in online players
-                var onlinePlayer = onlinePlayersCache.GetItem(playerProfile.PlayerId);
+                var onlinePlayer = onlinePlayersCache.GetItem(request.DeviceId);
 
                 if (onlinePlayer != null)
                 {
@@ -76,7 +77,7 @@ namespace SoareAlexGameServer.WebAPI.Models.UserAuthentification
                     PlayerId = playerProfile.PlayerId,
                 };
 
-                onlinePlayersCache.SetCachedItem(request.DeviceId, onlinePlayer);
+                onlinePlayersCache.SetCachedItem(playerProfile.DeviceId, onlinePlayer);
 
                 response.PlayerId = playerProfile.PlayerId;
                 response.AuthToken = jwtProvider.GenerateToken(new Claim[] { new Claim("DeviceId", playerProfile.DeviceId) });
