@@ -9,7 +9,6 @@ namespace SoareAlexGameServer.WebAPI.Swagger
     {
         public void Configure(SwaggerGenOptions options)
         {
-
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "TEST",

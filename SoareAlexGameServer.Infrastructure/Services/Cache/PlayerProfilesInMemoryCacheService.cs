@@ -1,47 +1,69 @@
-﻿//using Microsoft.Extensions.Caching.Memory;
-//using Microsoft.IdentityModel.Tokens;
-//using SoareAlexGameServer.Infrastructure.Entities;
-//using SoareAlexGameServer.Infrastructure.Entities.DB;
-//using SoareAlexGameServer.Infrastructure.Interfaces;
-//using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
-//using System;
-//using System.Collections.Generic;
-//using System.IdentityModel.Tokens.Jwt;
-//using System.Linq;
-//using System.Security.Claims;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Caching.Memory;
+using SoareAlexGameServer.Infrastructure.Entities.DB;
+using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
+using System.Collections.Concurrent;
 
-//namespace SoareAlexGameServer.Infrastructure.Services.Cache
-//{
-//    public class PlayerProfilesInMemoryCacheService : IPlayerProfilesCacheService
-//    {
-//        private IMemoryCache _cache;
-//        private int CACHE_EXPIRY_IN_MINUTES = 60;
+namespace SoareAlexGameServer.Infrastructure.Services.Cache
+{
+    public class PlayerProfilesInMemoryCacheService : IPlayerProfilesCacheService
+    {
+        private const int CACHE_EXPIRY_IN_MINUTES = 60;
 
-//        public PlayerProfilesInMemoryCacheService(IMemoryCache cache)
-//        {
-//            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
-//        }
+        private IMemoryCache _cache;
 
-//        public void SetCachedItem(string cacheKey, PlayerProfile item)
-//        {
-//            MemoryCacheEntryOptions cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CACHE_EXPIRY_IN_MINUTES));
+        private ConcurrentDictionary<string, string> PlayersIdsMappedToDeviceId;
 
-//            _cache.Set(cacheKey, item, cacheEntryOptions);
-//        }
+        public PlayerProfilesInMemoryCacheService(IMemoryCache cache)
+        {
+            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
 
-//        public PlayerProfile GetItem(string cacheKey)
-//        {
-//            PlayerProfile item;
-//            _cache.TryGetValue(cacheKey, out item);
+            PlayersIdsMappedToDeviceId = new ConcurrentDictionary<string, string>();
+        }
 
-//            return item;
-//        }
+        public void SetCachedItem(string cacheKey, PlayerProfile item)
+        {
+            throw new NotImplementedException();
+        }
 
-//        public void DeleteItem(string cacheKey)
-//        {
-//            _cache.Remove(cacheKey);
-//        }
-//    }
-//}
+        public void SetCachedItem(string deviceId, string playerId, PlayerProfile item)
+        {
+            MemoryCacheEntryOptions cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CACHE_EXPIRY_IN_MINUTES));
+
+            PlayersIdsMappedToDeviceId.TryAdd(playerId, deviceId);
+
+            _cache.Set(ComputeCacheKey(deviceId), item, cacheEntryOptions);
+        }
+
+        public PlayerProfile GetItemByPlayerId(string playerId)
+        {
+            var deviceId = "";
+
+            if(PlayersIdsMappedToDeviceId.TryGetValue(playerId, out deviceId))
+            {
+                PlayerProfile item;
+                _cache.TryGetValue(ComputeCacheKey(deviceId), out item);
+                return item;
+            }
+
+            return null;
+        }
+
+        public PlayerProfile GetItem(string deviceId)
+        {
+            PlayerProfile item;
+            _cache.TryGetValue(ComputeCacheKey(deviceId), out item);
+
+            return item;
+        }
+
+        public void DeleteItem(string deviceId)
+        {
+            _cache.Remove(ComputeCacheKey(deviceId));
+        }
+
+        private string ComputeCacheKey(string cacheKey)
+        {
+            return Constants.PLAYERS_PROFILES_CACHE_KEY + cacheKey;
+        }
+    }
+}

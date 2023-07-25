@@ -13,6 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace SoareAlexGameServer.Infrastructure.Services
 {
@@ -29,54 +30,54 @@ namespace SoareAlexGameServer.Infrastructure.Services
 
     public class OnlinePlayersWebSocketsHandler : IWebSocketService
     {
+        private readonly ILogger<OnlinePlayersWebSocketsHandler> logger;
         private readonly IOnlinePlayersCacheService onlinePlayersCacheService;
+  
 
-        public OnlinePlayersWebSocketsHandler(IOnlinePlayersCacheService onlinePlayersCacheService)
+        public OnlinePlayersWebSocketsHandler(ILogger<OnlinePlayersWebSocketsHandler> logger, IOnlinePlayersCacheService onlinePlayersCacheService)
         {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.onlinePlayersCacheService = onlinePlayersCacheService ?? throw new ArgumentNullException(nameof(onlinePlayersCacheService));
         }
 
         public async Task HandleWebSocketConnection(HttpContext context, List<Claim> claims)
         {
-            var deviceIdClaim = claims.FirstOrDefault(c => c.Type == "DeviceId");
-            var deviceId = deviceIdClaim.Value;
-
-            var onlinePlayer = onlinePlayersCacheService.GetItem(deviceId);
-
-            // TO DELETE
-            if (onlinePlayer == null)
+            try
             {
-                var webSocketConnection = await context.WebSockets.AcceptWebSocketAsync();
+                var deviceIdClaim = claims.FirstOrDefault(c => c.Type == "DeviceId");
+                var deviceId = deviceIdClaim.Value;
 
-                onlinePlayer = new OnlinePlayer()
+                var onlinePlayer = onlinePlayersCacheService.GetItem(deviceId);
+
+                if (onlinePlayer == null)
                 {
-                    WebSocketConnection = webSocketConnection
-                };
+                    context.Response.StatusCode = StatusCodes.Status404NotFound;
+                    await context.Response.WriteAsync("Player not found!");
+                    return;
+                }
 
-                await onlinePlayer.ListenToWebSocket(webSocketConnection);
+                if (onlinePlayer.WebSocketState != WebSocketState.Open)
+                {
+                    context.Response.StatusCode = StatusCodes.Status200OK;
 
-                onlinePlayersCacheService.SetCachedItem(deviceId, onlinePlayer);
+                    var webSocketConnection = await context.WebSockets.AcceptWebSocketAsync();
+                    await onlinePlayer.ListenToWebSocket(webSocketConnection, HandleWebSocketConnectioClosed);
+                }
+                else
+                {
+                    context.Response.StatusCode = StatusCodes.Status409Conflict;
+                    return;
+                }
+
+            }catch (WebSocketException ex)
+            {
+                logger.LogError($"Incoming web socket connection failed with error: {ex.Message}");
             }
+        }
 
-            //if (onlinePlayer == null)
-            //{
-            //    context.Response.StatusCode = StatusCodes.Status404NotFound;
-            //    await context.Response.WriteAsync("Player not found!");
-            //    return;
-            //}
-
-            //if (onlinePlayer.WebSocketState != WebSocketState.Open)
-            //{
-            //    context.Response.StatusCode = StatusCodes.Status200OK;
-
-            //    var webSocketConnection = await context.WebSockets.AcceptWebSocketAsync();
-            //    await onlinePlayer.ListenToWebSocket(webSocketConnection);
-            //}
-            //else
-            //{
-            //    context.Response.StatusCode = StatusCodes.Status409Conflict;
-            //    return;
-            //}
+        private void HandleWebSocketConnectioClosed(OnlinePlayer forPlayer)
+        {
+            onlinePlayersCacheService.DeleteItem(forPlayer.DeviceId);
         }
     }
 }

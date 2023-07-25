@@ -26,13 +26,17 @@ namespace SoareAlexGameServer.Infrastructure.Entities.DB
         {
             Value = newAmount;
         }
-        public void Add(double amount)
+        public void Credit(double amount)
         {
             Value += amount;
         }
-        public void Remove(double amount)
+        public void Debit(double amount)
         {
             Value -= amount;
+        }
+        public bool IsDebitable(double amount)
+        {
+            return Value >= amount;
         }
     }
 }

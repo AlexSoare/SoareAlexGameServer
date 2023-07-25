@@ -14,14 +14,18 @@ namespace SoareAlexGameServer.Infrastructure.Entities
 {
     public class OnlinePlayer
     {
+        public string DeviceId { get; set; }
         public string PlayerId { get; set; }
 
         public WebSocketState WebSocketState { get; set; } = WebSocketState.Closed;
-        public WebSocket WebSocketConnection { get; set; }
 
-        public async Task ListenToWebSocket(WebSocket webSocket)
+        private WebSocket WebSocketConnection { get; set; }
+        private Action<OnlinePlayer> webSocketconnectionClosedCallback;
+
+        public async Task ListenToWebSocket(WebSocket webSocket, Action<OnlinePlayer> onCloseCallback)
         {
             WebSocketConnection = webSocket;
+            webSocketconnectionClosedCallback = onCloseCallback;
 
             try
             {
@@ -29,22 +33,23 @@ namespace SoareAlexGameServer.Infrastructure.Entities
                 {
                     while (WebSocketConnection.State == WebSocketState.Open)
                     {
-                        WebSocketState = WebSocketConnection.State;
-
-                        var buffer = new ArraySegment<byte>(new byte[4096]);
-                        var receiveResult = await WebSocketConnection.ReceiveAsync(buffer, CancellationToken.None);
-
-                        if (receiveResult.MessageType == WebSocketMessageType.Close)
+                        try
                         {
-                            WebSocketState = WebSocketState.Closed;
-                            // Handle WebSocket closure request from the client
-                            await WebSocketConnection.CloseAsync(WebSocketCloseStatus.NormalClosure, "WebSocket closed by the client.", CancellationToken.None);
-                        }
-                        else
+                            WebSocketState = WebSocketConnection.State;
+
+                            var buffer = new ArraySegment<byte>(new byte[4096]);
+                            var receiveResult = await WebSocketConnection.ReceiveAsync(buffer, CancellationToken.None);
+
+                            if (receiveResult.MessageType == WebSocketMessageType.Close)
+                            {
+                                WebSocketState = WebSocketState.Closed;
+                                // Handle WebSocket closure request from the client
+                                await WebSocketConnection.CloseAsync(WebSocketCloseStatus.NormalClosure, "WebSocket closed by the client.", CancellationToken.None);
+                                webSocketconnectionClosedCallback?.Invoke(this);
+                            }
+                        }catch (WebSocketException ex)
                         {
-                            // Handle the received message and respond to the client
-                            // Here, you can add your custom message processing logic
-                            // and respond to the client if needed
+                            webSocketconnectionClosedCallback?.Invoke(this);
                         }
                     }
                 });
@@ -52,7 +57,7 @@ namespace SoareAlexGameServer.Infrastructure.Entities
             }
             catch (WebSocketException)
             {
-                // Handle any WebSocket-related exceptions
+                webSocketconnectionClosedCallback?.Invoke(this);
             }
         }
 

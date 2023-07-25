@@ -182,3 +182,17 @@ D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\
 D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\System.Text.Json.dll
 D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\runtimes\linux-ppc64le\native\libe_sqlite3.so
 D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Microsoft.Extensions.Configuration.Binder.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Newtonsoft.Json.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Newtonsoft.Json.Bson.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.AspNetCore.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Extensions.Hosting.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Extensions.Logging.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Formatting.Compact.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Settings.Configuration.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.Console.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.Debug.dll
+D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.File.dll

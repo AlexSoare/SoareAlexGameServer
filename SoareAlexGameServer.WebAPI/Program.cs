@@ -12,15 +12,12 @@ using SoareAlexGameServer.Infrastructure.Services.Cache;
 using SoareAlexGameServer.Infrastructure.Services.Repositories;
 using SoareAlexGameServer.Infrastructure.Interfaces.Repositories;
 using SoareAlexGameServer.Infrastructure.Data;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using SoareAlexGameServer.WebAPI;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -38,15 +35,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddAuthorization();
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+});
 
 builder.Services.AddDbContext<SqliteDbContext>();
 builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 builder.Services.AddMemoryCache();
+
 builder.Services.AddSingleton<IOnlinePlayersCacheService, OnlinePlayersInMemoryCacheService>();
-//builder.Services.AddSingleton<IPlayerProfilesCacheService, PlayerProfilesInMemoryCacheService>();
+builder.Services.AddSingleton<IPlayerProfilesCacheService, PlayerProfilesInMemoryCacheService>();
+builder.Services.AddSingleton<IWebSocketService, OnlinePlayersWebSocketsHandler>();
 
 builder.Services.AddScoped<IPlayerProfileRepository, PlayerProfileSqliteRepository>();
 builder.Services.AddScoped<IJwtTokenProvider, LocalJwtTokenProvider>(p =>
@@ -58,11 +60,13 @@ builder.Services.AddScoped<IJwtTokenProvider, LocalJwtTokenProvider>(p =>
     return new LocalJwtTokenProvider(securityKey, issuer, audience);
 });
 
-builder.Services.AddSingleton<IWebSocketService, OnlinePlayersWebSocketsHandler>();
-
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 
+Log.Logger = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+        .WriteTo.Console()
+        .CreateLogger();
 
 var app = builder.Build();
 
