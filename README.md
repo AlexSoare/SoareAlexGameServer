@@ -52,7 +52,7 @@ enum ResourceType{
 {
   "UpdatedResources": [
     {
-      "ResourceType": "string",
+      "ResourceType": "ResourceType",
       "Value": "number"
     }
   ],
@@ -84,7 +84,7 @@ enum ResourceType{
 ```json
 {
   "FriendPlayerId": "string",
-  "ResourceType": "string",
+  "ResourceType": "ResourceType(number)",
   "ResourceValue": "number"
 }
 ```
