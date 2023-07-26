@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.IdentityModel.Tokens;
 using SoareAlexGameServer.Infrastructure.Interfaces;
 using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
 using SoareAlexGameServer.Infrastructure.Interfaces.Repositories;
@@ -7,7 +6,6 @@ using SoareAlexGameServer.Infrastructure.Entities.DB;
 using SoareAlexGameServer.Infrastructure.Entities;
 using System.Net;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
 
 namespace SoareAlexGameServer.WebAPI.Models.UserAuthentification
 {

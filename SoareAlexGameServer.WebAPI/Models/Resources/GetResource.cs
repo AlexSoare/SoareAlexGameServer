@@ -40,6 +40,13 @@ namespace SoareAlexGameServer.WebAPI.Models.Resources
 
                 try
                 {
+                    if (!Enum.IsDefined(typeof(ResourceType), request.ResourceType))
+                    {
+                        response.Status = HttpStatusCode.BadRequest;
+                        return response;
+                    }
+
+
                     var deviceId = httpContext.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "DeviceId");
                     if (deviceId == null)
                     {

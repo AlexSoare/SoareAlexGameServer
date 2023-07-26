@@ -3,10 +3,8 @@ using System.Net;
 using SoareAlexGameServer.Infrastructure.Entities.DB;
 using SoareAlexGameServer.Infrastructure.Interfaces.Repositories;
 using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
-using System.Net.WebSockets;
-using SoareAlexGameServer.Infrastructure.Services;
-using static SoareAlexGameServer.WebAPI.Models.Resources.GetResource;
-using SoareAlexGameServer.WebAPI.Models.Resources;
+using SoareAlexGameServer.Infrastructure.WebSockets.Events;
+using SoareAlexGameServer.Infrastructure.WebSockets;
 
 namespace SoareAlexGameServer.WebAPI.Models.Gifts
 {
@@ -47,6 +45,18 @@ namespace SoareAlexGameServer.WebAPI.Models.Gifts
 
                 try
                 {
+                    if (!Enum.IsDefined(typeof(ResourceType), request.ResourceType))
+                    {
+                        response.Status = HttpStatusCode.BadRequest;
+                        return response;
+                    }
+
+                    if (request.ResourceValue < 1)
+                    {
+                        response.Status = HttpStatusCode.BadRequest;
+                        return response;
+                    }
+
                     var deviceId = httpContext.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "DeviceId");
                     if (deviceId == null)
                     {
@@ -126,13 +136,14 @@ namespace SoareAlexGameServer.WebAPI.Models.Gifts
                     var onlineFriend = onlinePlayersCacheService.GetItem(friendProfile.DeviceId);
                     if (onlineFriend != null)
                     {
-                        var wsMessage = new WebSocketMessage()
+                        var wsMessage = new GiftEvent()
                         {
-                            Event = WebSocketEvent.GiftEvent,
-                            Message = $"Received {request.ResourceValue} {request.ResourceType} from {callerPlayerProfile.PlayerId}"
+                            SenderId = callerPlayerProfile.PlayerId,
+                            ResourceType = request.ResourceType,
+                            ResourceValue = request.ResourceValue,
                         };
 
-                        await onlineFriend.SendToWebSocket(wsMessage);
+                        await onlineFriend.SendToWebSocket(WebSocketEventType.Gift, wsMessage);
                     }
 
                     response.Status = HttpStatusCode.OK;

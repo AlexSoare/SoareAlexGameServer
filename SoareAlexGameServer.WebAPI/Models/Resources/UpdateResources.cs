@@ -41,6 +41,12 @@ namespace SoareAlexGameServer.WebAPI.Models.Resources
 
                 try
                 {
+                    if (!Enum.IsDefined(typeof(ResourceType), request.ResourceType))
+                    {
+                        response.Status = HttpStatusCode.BadRequest;
+                        return response;
+                    }
+
                     var deviceId = httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "DeviceId");
                     if (deviceId == null)
                     {
@@ -62,6 +68,7 @@ namespace SoareAlexGameServer.WebAPI.Models.Resources
                             return response;
                         }
                     }
+
 
                     var resourceToUpdate = playerProfile.Resources.FirstOrDefault(r => r.ResourceType == request.ResourceType);
                     if (resourceToUpdate == null)

@@ -1,9 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SoareAlexGameServer.WebAPI.Models.UserAuthentification;
-using System.Net;
 
 namespace SoareAlexWebAPI.Controllers
 {

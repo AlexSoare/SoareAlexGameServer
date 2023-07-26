@@ -196,3 +196,18 @@ D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\
 D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.Console.dll
 D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.Debug.dll
 D:\PROJECTS\ASP. NET\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.File.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\appsettings.Production.json
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Microsoft.Extensions.Configuration.Binder.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Newtonsoft.Json.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Newtonsoft.Json.Bson.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.AspNetCore.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Extensions.Hosting.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Extensions.Logging.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Formatting.Compact.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Settings.Configuration.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.Console.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.Debug.dll
+F:\PROJECTS\ASP.Net\SoareAlexGameServer\SoareAlexGameServer.WebAPI\bin\Release\net6.0\Serilog.Sinks.File.dll

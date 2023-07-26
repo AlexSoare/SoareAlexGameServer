@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D6dFt7rl7tMQfNMJ02TB8qMFBN71v6dRqt1jc0gOi5BmVTi6rjoymZcGsYzXkd5HDJtA3BigwDJEZ488+xEx0A==",
+  "dgSpecHash": "y3CEu4eLIoSuxOjl2JD3d9fqfxhZEDi57Nf0auO/+qbZqAjfM+lnmG4Ka/un6o58b8UTMjBZJn8yWa7FENEbbw==",
   "success": true,
-  "projectFilePath": "D:\\PROJECTS\\ASP. NET\\SoareAlexGameServer\\SoareAlexGameServer.WebAPI\\SoareAlexGameServer.WebAPI.csproj",
+  "projectFilePath": "F:\\PROJECTS\\ASP.Net\\SoareAlexGameServer\\SoareAlexGameServer.WebAPI\\SoareAlexGameServer.WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alecs\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\alecs\\.nuget\\packages\\mediatr\\11.0.0\\mediatr.11.0.0.nupkg.sha512",

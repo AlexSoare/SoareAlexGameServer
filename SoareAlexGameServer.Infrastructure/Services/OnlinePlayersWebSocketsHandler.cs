@@ -1,38 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using SoareAlexGameServer.Infrastructure.Entities;
-using SoareAlexGameServer.Infrastructure.Interfaces;
+﻿using SoareAlexGameServer.Infrastructure.Entities;
 using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
-using SoareAlexGameServer.Infrastructure.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Net.WebSockets;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using System.Security.AccessControl;
+using SoareAlexGameServer.Infrastructure.Interfaces;
 
 namespace SoareAlexGameServer.Infrastructure.Services
 {
-    public enum WebSocketEvent
-    {
-        GiftEvent
-    }
-
-    public class WebSocketMessage
-    {
-        public WebSocketEvent Event { get; set; }
-        public string Message { get; set; }
-    }
-
     public class OnlinePlayersWebSocketsHandler : IWebSocketService
     {
         private readonly ILogger<OnlinePlayersWebSocketsHandler> logger;
         private readonly IOnlinePlayersCacheService onlinePlayersCacheService;
-  
+
 
         public OnlinePlayersWebSocketsHandler(ILogger<OnlinePlayersWebSocketsHandler> logger, IOnlinePlayersCacheService onlinePlayersCacheService)
         {
@@ -69,7 +50,8 @@ namespace SoareAlexGameServer.Infrastructure.Services
                     return;
                 }
 
-            }catch (WebSocketException ex)
+            }
+            catch (WebSocketException ex)
             {
                 logger.LogError($"Incoming web socket connection failed with error: {ex.Message}");
             }

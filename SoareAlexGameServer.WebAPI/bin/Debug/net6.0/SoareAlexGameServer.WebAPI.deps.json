@@ -762,7 +762,8 @@
       "SoareAlexGameServer.Infrastructure/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.20",
-          "Microsoft.EntityFrameworkCore.Sqlite": "7.0.9"
+          "Microsoft.EntityFrameworkCore.Sqlite": "7.0.9",
+          "Newtonsoft.Json": "13.0.3"
         },
         "runtime": {
           "SoareAlexGameServer.Infrastructure.dll": {}

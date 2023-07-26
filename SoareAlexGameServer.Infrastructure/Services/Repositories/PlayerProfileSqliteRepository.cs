@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SoareAlexGameServer.Infrastructure.Data;
+﻿using SoareAlexGameServer.Infrastructure.Data;
 using SoareAlexGameServer.Infrastructure.Entities.DB;
 using SoareAlexGameServer.Infrastructure.Interfaces.Repositories;
 

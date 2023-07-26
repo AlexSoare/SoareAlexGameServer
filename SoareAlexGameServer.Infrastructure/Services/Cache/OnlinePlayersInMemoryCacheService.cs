@@ -1,16 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using Microsoft.IdentityModel.Tokens;
 using SoareAlexGameServer.Infrastructure.Entities;
-using SoareAlexGameServer.Infrastructure.Entities.DB;
-using SoareAlexGameServer.Infrastructure.Interfaces;
 using SoareAlexGameServer.Infrastructure.Interfaces.Cache;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SoareAlexGameServer.Infrastructure.Services.Cache
 {

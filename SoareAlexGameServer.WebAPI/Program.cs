@@ -17,8 +17,13 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddSwaggerGen();
+// Add Swagger
+builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
+var test = builder.Configuration.GetSection("JwtSettings:Issuer").Value;
+
+// Add JWT authentification services
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
@@ -34,22 +39,32 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddAuthorization();
 
-// Add services to the container.
+// Add loggin services
+Log.Logger = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+        .WriteTo.Console()
+        .CreateLogger();
+
+// Add controllers
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
 });
-
-builder.Services.AddDbContext<SqliteDbContext>();
 builder.Services.AddMediatR(typeof(Program));
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
+// Add http context accessor for validating JWT tokens for Web socket connections
+builder.Services.AddHttpContextAccessor();
+
+// Add DB context
+builder.Services.AddDbContext<SqliteDbContext>();
+
+/// Add In Memory caching
+/// In a horizontal scaling environment, these services should be changed with Distributed Cache services,
 builder.Services.AddMemoryCache();
-
 builder.Services.AddSingleton<IOnlinePlayersCacheService, OnlinePlayersInMemoryCacheService>();
 builder.Services.AddSingleton<IPlayerProfilesCacheService, PlayerProfilesInMemoryCacheService>();
-builder.Services.AddSingleton<IWebSocketService, OnlinePlayersWebSocketsHandler>();
 
+builder.Services.AddSingleton<IWebSocketService, OnlinePlayersWebSocketsHandler>();
 builder.Services.AddScoped<IPlayerProfileRepository, PlayerProfileSqliteRepository>();
 builder.Services.AddScoped<IJwtTokenProvider, LocalJwtTokenProvider>(p =>
 {
@@ -60,17 +75,10 @@ builder.Services.AddScoped<IJwtTokenProvider, LocalJwtTokenProvider>(p =>
     return new LocalJwtTokenProvider(securityKey, issuer, audience);
 });
 
-builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
-
-Log.Logger = new LoggerConfiguration()
-        .Enrich.FromLogContext()
-        .WriteTo.Console()
-        .CreateLogger();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -84,9 +92,10 @@ app.UseAuthorization();
 
 app.UseAuthorization();
 
+app.UseWebSockets();
+
 app.MapControllers();
 
-app.UseWebSockets();
 app.MapGet("/", async context =>
 {
     if (context.WebSockets.IsWebSocketRequest)
@@ -108,3 +117,5 @@ app.MapGet("/", async context =>
 });
 
 app.Run();
+
+Log.CloseAndFlush();

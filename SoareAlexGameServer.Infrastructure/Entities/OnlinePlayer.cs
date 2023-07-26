@@ -1,14 +1,7 @@
-﻿using SoareAlexGameServer.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using SoareAlexGameServer.Infrastructure.WebSockets;
 using System.Net.WebSockets;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SoareAlexGameServer.Infrastructure.Entities
 {
@@ -33,22 +26,16 @@ namespace SoareAlexGameServer.Infrastructure.Entities
                 {
                     while (WebSocketConnection.State == WebSocketState.Open)
                     {
-                        try
-                        {
-                            WebSocketState = WebSocketConnection.State;
+                        WebSocketState = WebSocketConnection.State;
 
-                            var buffer = new ArraySegment<byte>(new byte[4096]);
-                            var receiveResult = await WebSocketConnection.ReceiveAsync(buffer, CancellationToken.None);
+                        var buffer = new ArraySegment<byte>(new byte[4096]);
+                        var receiveResult = await WebSocketConnection.ReceiveAsync(buffer, CancellationToken.None);
 
-                            if (receiveResult.MessageType == WebSocketMessageType.Close)
-                            {
-                                WebSocketState = WebSocketState.Closed;
-                                // Handle WebSocket closure request from the client
-                                await WebSocketConnection.CloseAsync(WebSocketCloseStatus.NormalClosure, "WebSocket closed by the client.", CancellationToken.None);
-                                webSocketconnectionClosedCallback?.Invoke(this);
-                            }
-                        }catch (WebSocketException ex)
+                        if (receiveResult.MessageType == WebSocketMessageType.Close)
                         {
+                            WebSocketState = WebSocketState.Closed;
+
+                            await WebSocketConnection.CloseAsync(WebSocketCloseStatus.NormalClosure, "WebSocket closed by the client.", CancellationToken.None);
                             webSocketconnectionClosedCallback?.Invoke(this);
                         }
                     }
@@ -61,13 +48,18 @@ namespace SoareAlexGameServer.Infrastructure.Entities
             }
         }
 
-        public async Task SendToWebSocket(WebSocketMessage msg)
+        public async Task SendToWebSocket<T>(WebSocketEventType eventType, T wsEvent)
         {
             if (WebSocketConnection == null || WebSocketState != WebSocketState.Open)
                 return;
 
-            byte[] messageBytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(msg));
-            await WebSocketConnection.SendAsync(new ArraySegment<byte>(messageBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+            var msgToSend = new RawWebSocketEvent<T>(eventType, wsEvent);
+
+            var json = JsonConvert.SerializeObject(msgToSend);
+
+            byte[] eventBytes = Encoding.UTF8.GetBytes(json);
+
+            await WebSocketConnection.SendAsync(new ArraySegment<byte>(eventBytes), WebSocketMessageType.Text, true, CancellationToken.None);
         }
     }
 }

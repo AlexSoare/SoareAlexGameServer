@@ -11,9 +11,8 @@ namespace SoareAlexGameServer.WebAPI.Swagger
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "TEST",
+                Title = "Alex Soare Game Server",
                 Version = "v1",
-                Description = "Your API Description"
             });
 
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

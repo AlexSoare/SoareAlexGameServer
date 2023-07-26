@@ -1,4 +1,4 @@
-﻿namespace SoareAlexGameServer.Infrastructure.Interfaces
+﻿namespace SoareAlexGameServer.Infrastructure.Interfaces.Repositories
 {
     public interface IRepository<T>
     {
