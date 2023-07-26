@@ -75,6 +75,31 @@ enum ResourceType{
 }
 ```
 
+## Gifts Controller
+
+### Send Gift
+- Endpoint: POST /api/Gifts/SendGift
+- Description: Sends a gift to a friend, updating resources for both the sender and the receiver.
+- Request Model:
+```json
+{
+  "FriendPlayerId": "string",
+  "ResourceType": "string",
+  "ResourceValue": "number"
+}
+```
+- Response Model:
+```json
+{
+  "Status": "integer"
+}
+```
+- Status Codes:
+  - 200 OK: Successful gift sending.
+  - 400 Bad Request: Invalid request, sending a gift to yourself, or insufficient resources.
+  - 404 Not Found: Friend player not found.
+  - 500 Internal Server Error: Unexpected error during gift sending.
 
 
+Note: For authentication and authorization, the API requires an authentication token (Bearer JWT) in the request headers.
 
