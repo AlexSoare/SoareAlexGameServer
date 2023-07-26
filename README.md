@@ -12,7 +12,7 @@ enum ResourceType{
 
 ## User Authentication Controller
 
-# Login
+### Login
 - Endpoint: POST /api/UserAuthentification/Login
 - Description: Logs in a user and generates an authentication token.
 - Request Model:
@@ -30,3 +30,51 @@ enum ResourceType{
   "Status": "integer"
 }
 ```
+- Status Codes:
+  - 200 OK: Successful login.
+  - 400 Bad Request: Invalid request or missing DeviceId.
+  - 500 Internal Server Error: Unexpected error during login.
+
+## Resources Controller
+
+### Update Resources
+- Endpoint: POST /api/Resources/UpdateResources
+- Description: Updates the resources for the authenticated user by setting its value directly as the received value.
+- Request Model:
+```json
+{
+  "ResourceType": "ResourceType(number)",
+  "ResourceValue": "number"
+}
+```
+- Response Model:
+```json
+{
+  "UpdatedResources": [
+    {
+      "ResourceType": "string",
+      "Value": "number"
+    }
+  ],
+  "Status": "integer"
+}
+```
+- Status Codes:
+  - 200 OK: Successful resource update.
+  - 400 Bad Request: Invalid request or insufficient resources.
+  - 500 Internal Server Error: Unexpected error during resource update.
+
+### Get Resource
+- Endpoint: GET /api/Resources/GetResource?ResourceType={resourceType}
+- Description: Retrieves the value of a specific resource for the authenticated user.
+- Response Model:
+```json
+{
+  "ResourceValue": "number",
+  "Status": "integer"
+}
+```
+
+
+
+
